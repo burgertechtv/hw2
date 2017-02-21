@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+    <title>jQuery Mobile</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="css/custom-1.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+    
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.2.js"></script>
+    
+   
+    
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.2.min.css" />
+
+    
+    
+
+   
+   
+		
+
+    <script>
+    	$(document).ready(function() {
+   
+   		//draw(1, "#card-page1");
+    	//draw(2, "#card-page2");
+    	$("#deckSubmit1").click(function(){
+    		draw(1, "#card-page1");
+		});
+		$("#deckSubmit2").click(function(){
+    		draw(2, "#card-page2");
+		});
+
+
+    	});
+
+  		//Draw number of cards based on argument passed into function
+    	function draw(num, page){
+    		var deckID = "6gxmemoulipl"; 
+    		var URL = "https://deckofcardsapi.com/api/deck/"; 
+    		URL = URL + deckID; 
+    		URL = URL + "/draw/?count=" + num;
+
+			$.getJSON(URL, function(data){
+				
+				if (num == 1) {
+					$(page).html("<img src=" + data.cards[0].image + ">");
+
+				}else if (num == 2) {
+					$(page).html("<img src=" + data.cards[0].image + ">");
+					$(page).append("<img src=" + data.cards[1].image + ">");
+				}
+
+				console.log(data);
+			});
+
+    	};
+
+
+    	function newDeck(){
+			$.getJSON("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=10", function(data){
+					console.log(data);
+			});
+		};	
+
+    </script>
+
+</head>
+
+<body>
+
+
+
+
+
+<div data-role="page" id="page1">
+  <div data-role="header">
+    <h1>Draw 1 Card</h1>
+  </div> <!-- End Header -->
+
+ <div data-role="navbar">
+    <ul>
+      <li><a href="#page1">1 Card</a></li>
+      <li><a href="#page2">2 Cards</a></li>
+    </ul>
+  </div><!-- End Navbar -->
+
+  <div data-role="content">
+    <input id="deckSubmit1" type="button" name="submit" value="Draw 1 Card">
+
+    <div id="card-page1"></div>
+
+  </div> <!-- End Content-->
+  
+</div> <!-- End Page-->
+
+<div data-role="page" id="page2">
+  <div data-role="header">
+    <h1>Draw 2 Cards</h1>
+  </div> <!-- End Header -->
+
+ <div data-role="navbar">
+    <ul>
+      <li><a href="#page1">1 Card</a></li>
+      <li><a href="#page2">2 Cards</a></li>
+    </ul>
+  </div><!-- End Navbar -->
+
+  <div data-role="content">
+    <input id="deckSubmit2" type="button" name="submit" value="Draw 2 Cards">
+    <div id="card-page2"></div>
+  </div> <!-- End Content-->
+
+</div> <!-- End Page-->
+
+	
+</body>
+
+</html>
